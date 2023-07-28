@@ -1,3 +1,10 @@
+//================================================================
+// file         : proj_rv64
+// description  : core config parameters
+// author       : Lin Pei Run
+// version      :
+// date         : 2023-07-12
+//================================================================
 package config
 
 import chisel3._

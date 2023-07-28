@@ -1,6 +1,11 @@
+//================================================================
+// file         : config
+// description  : core config
+// author       : Lin Pei Run
+// version      :
+// date         : 2023-07-12
+//================================================================
 package config
-
-import chisel3._
 
 object defaultSettings {
   def apply() = Map(
