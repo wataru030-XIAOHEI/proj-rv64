@@ -43,7 +43,7 @@ class fifo[T<:Data](gen:T,DP:Int = 0 ) extends fifo_base(gen) {
   val r_idx  = rptr_r.tail(1)
 
 
-  when(wen){ ram.write(w_idx,io.wr.bits) }
+  when(wen) { ram.write(w_idx,io.wr.bits) }
   //pointer update
   when(wen) { wptr_r := wptr_r + 1.U(ptr_wd.W) }
   when(ren) { rptr_r := rptr_r + 1.U(ptr_wd.W) }
@@ -55,7 +55,5 @@ class fifo[T<:Data](gen:T,DP:Int = 0 ) extends fifo_base(gen) {
 }
 
 class chisel_fifo[T<:Data](gen:T,DP:Int = 0 ) extends fifo_base(gen) {
-
   io.rd <> Queue(io.wr,DP)
-
 }

@@ -11,7 +11,7 @@ import chisel3.stage.ChiselStage
 import circt.stage._
 import chisel3._
 import chisel3.util._
-import libs.{fifo, gtclk}
+import libs.{axi_gen_test, fifo, gtclk}
 
 //==========================================================
 //============ E L A B O R A T E ===========================
@@ -20,7 +20,7 @@ object Elaborate extends App {
   def targetDir : String = "generated"
 
   def top = {
-    new fifo(UInt(32.W),16)
+    new axi_gen_test(UInt(32.W))
   } // change the top module class
   /**@note you can modify this defination to change the generation tool .*/
   def useCIRCT = true
