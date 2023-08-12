@@ -98,3 +98,4 @@ class axi_io[T<:Data](
   val w_chl   = Decoupled(Output(new axi_w(gen,IDW)))
   val b_chl   = Flipped(Decoupled(Output(new axi_b(IDW))))
 }
+

@@ -32,7 +32,7 @@ In the current status , I think this core has the following parameters .
 | CheckPoints Support           | Yes        |
 | Functions Units Numbers       | unknown    |
 
-I(Wataru) recommand : $Machine\ Width > Issue\ Width$  .
+Recommand : $Machine\ Width > Issue\ Width$  .
 
 
 ## Module Guide 
