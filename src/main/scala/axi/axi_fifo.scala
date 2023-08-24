@@ -5,7 +5,8 @@
 // version      :
 // date         : 2023-08-06
 //================================================================
-package libs
+package axi
+import libs.fifo_base
 import chisel3._
 import chisel3.util.Queue
 
