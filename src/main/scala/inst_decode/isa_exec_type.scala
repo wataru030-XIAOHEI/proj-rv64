@@ -49,3 +49,55 @@ object br_code2 {
   val BLTU: UInt = "b1 1000 0011".U(wd.W)
   val BGEU: UInt = "b1 1000 0100".U(wd.W)
 }
+
+object load_code2{
+  private val wd : Int = 9 
+  val LB  : UInt = "b0 0000 0001".U(wd.W)
+  val LBU : UInt = "b1 0000 0001".U(wd.W)
+  val LH  : UInt = "b0 0000 0010".U(wd.W)
+  val LHU : UInt = "b1 0000 0010".U(wd.W)
+  val LW  : UInt = "b0 0000 0100".U(wd.W)
+  val LWU : UInt = "b1 0000 0100".U(wd.W)
+  val LD  : UInt = "b0 0000 1000".U(wd.W)
+}
+
+object store_code2{
+  private val wd :Int = 9 
+  val SB  : UInt = "b0 0000 0001".U(wd.W)
+  val SH  : UInt = "b0 0000 0010".U(wd.W)
+  val SW  : UInt = "b0 0000 0100".U(wd.W)
+  val SD  : UInt = "b0 0000 1000".U(wd.W)
+}
+
+object shift_code2{
+  private val wd : Int = 9
+  val SLL		: UInt = "b000000010".U
+  val SRL		: UInt = "b000000100".U
+  val SRA		: UInt = "b000001100".U
+  val SLLI	: UInt = "b000000011".U
+  val SRLI	: UInt = "b000000101".U
+  val SRAI	: UInt = "b000001101".U
+  val SLLW	: UInt = "b000010010".U
+  val SRLW	: UInt = "b000010100".U
+  val SRAW	: UInt = "b000011100".U
+  val SLLIW : UInt = "b000010011".U
+  val SRLIW : UInt = "b000010101".U
+  val SRAIW : UInt = "b000011101".U
+}
+
+
+object logic_code2{
+  private val wd : Int = 9
+  val XOR : UInt = "b0 0000 0010".U
+  val OR  : UInt = "b0 0000 0100".U
+  val AND : UInt = "b0 0000 0110".U
+  val XORI: UInt = "b0 0000 0011".U
+  val ORI : UInt = "b0 0000 0101".U
+  val ANDI: UInt = "b0 0000 0111".U
+}
+
+// mult div rem 
+object mdr_code2{
+  private val wd : Int = 9 
+  val MUL : UInt = "b0 0000 0001".U
+}

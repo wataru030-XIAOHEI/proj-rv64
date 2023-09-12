@@ -94,7 +94,7 @@ class axi_w_ctl[T<:Data](gen:T,DP:Int = 0 ) extends axi_w_ctl_base(gen) {
     fixed_mode -> norm_adr ,
     incr_mode  -> burst_adr ,
     wrap_mode  -> wrap_adr 
-  ))    
+  ))
   io.wen := io.axi_w.valid 
   io.wstrb := io.axi_w.bits.wstrb
   io.wdat := io.axi_w.bits.wdata

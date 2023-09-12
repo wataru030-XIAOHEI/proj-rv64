@@ -22,7 +22,7 @@ object Elaborate extends App {
   def targetDir : String = "generated"
 
   def top = {
-    new axi_ram_intf_ctl
+    new clkSwitch2to1
   } // change the top module class
   /**@note you can modify this defination to change the generation tool .*/
   def useCIRCT = true

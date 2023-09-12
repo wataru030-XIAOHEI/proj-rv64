@@ -20,7 +20,6 @@ libraryDependencies += "com.sifive"%%"chisel-circt"%"0.8.0"
 
 
 
-libraryDependencies += "org.scala-lang.modules" %% "scala-swing" % "3.0.0"
 
 
 

@@ -956,7 +956,7 @@ module axi_ram_intf_ctl(
   wire [3:0] axi_w_ctl_io_wstrb; // @[axi_ram_ctl.scala 39:25]
   wire [31:0] axi_w_ctl_io_wdat; // @[axi_ram_ctl.scala 39:25]
   wire  axi_w_ctl_io_free; // @[axi_ram_ctl.scala 39:25]
-  wire [31:0] _io_adr_T = axi_w_ctl_io_wen ? axi_w_ctl_io_adr : 32'h0; // @[axi_ram_ctl.scala 50:16]
+  wire [31:0] _io_adr_T = axi_w_ctl_io_wen ? axi_w_ctl_io_adr : 32'h0; // @[axi_ram_ctl.scala 49:16]
   axi_r_ctl axi_r_ctl ( // @[axi_ram_ctl.scala 38:25]
     .clock(axi_r_ctl_clock),
     .reset(axi_r_ctl_reset),
@@ -1009,11 +1009,11 @@ module axi_ram_intf_ctl(
   assign io_axi_mst_b_chl_valid = axi_w_ctl_io_axi_b_valid; // @[axi_ram_ctl.scala 44:23]
   assign io_axi_mst_b_chl_bits_bid = axi_w_ctl_io_axi_b_bits_bid; // @[axi_ram_ctl.scala 44:23]
   assign io_axi_mst_b_chl_bits_bresp = 2'h0; // @[axi_ram_ctl.scala 44:23]
-  assign io_adr = axi_r_ctl_io_ren ? axi_r_ctl_io_adr : _io_adr_T; // @[axi_ram_ctl.scala 49:16]
-  assign io_ren = axi_r_ctl_io_ren; // @[axi_ram_ctl.scala 51:10]
-  assign io_wen = axi_w_ctl_io_wen; // @[axi_ram_ctl.scala 52:10]
-  assign io_wstrb = axi_w_ctl_io_wstrb; // @[axi_ram_ctl.scala 53:12]
-  assign io_wdat = axi_w_ctl_io_wdat; // @[axi_ram_ctl.scala 54:11]
+  assign io_adr = axi_r_ctl_io_ren ? axi_r_ctl_io_adr : _io_adr_T; // @[axi_ram_ctl.scala 48:16]
+  assign io_ren = axi_r_ctl_io_ren; // @[axi_ram_ctl.scala 50:10]
+  assign io_wen = axi_w_ctl_io_wen; // @[axi_ram_ctl.scala 51:10]
+  assign io_wstrb = axi_w_ctl_io_wstrb; // @[axi_ram_ctl.scala 52:12]
+  assign io_wdat = axi_w_ctl_io_wdat; // @[axi_ram_ctl.scala 53:11]
   assign axi_r_ctl_clock = clock;
   assign axi_r_ctl_reset = reset;
   assign axi_r_ctl_io_axi_ar_valid = io_axi_mst_ar_chl_valid; // @[axi_ram_ctl.scala 40:23]
@@ -1022,8 +1022,8 @@ module axi_ram_intf_ctl(
   assign axi_r_ctl_io_axi_ar_bits_arlen = io_axi_mst_ar_chl_bits_arlen; // @[axi_ram_ctl.scala 40:23]
   assign axi_r_ctl_io_axi_ar_bits_arbusrt = io_axi_mst_ar_chl_bits_arbusrt; // @[axi_ram_ctl.scala 40:23]
   assign axi_r_ctl_io_axi_r_ready = io_axi_mst_r_chl_ready; // @[axi_ram_ctl.scala 41:23]
-  assign axi_r_ctl_io_rdat = io_rdat; // @[axi_ram_ctl.scala 57:21]
-  assign axi_r_ctl_io_rvld = io_rvld; // @[axi_ram_ctl.scala 56:21]
+  assign axi_r_ctl_io_rdat = io_rdat; // @[axi_ram_ctl.scala 56:21]
+  assign axi_r_ctl_io_rvld = io_rvld; // @[axi_ram_ctl.scala 55:21]
   assign axi_w_ctl_clock = clock;
   assign axi_w_ctl_reset = reset;
   assign axi_w_ctl_io_axi_aw_valid = io_axi_mst_aw_chl_valid; // @[axi_ram_ctl.scala 42:23]
@@ -1035,5 +1035,5 @@ module axi_ram_intf_ctl(
   assign axi_w_ctl_io_axi_w_bits_wstrb = io_axi_mst_w_chl_bits_wstrb; // @[axi_ram_ctl.scala 43:23]
   assign axi_w_ctl_io_axi_w_bits_wlast = io_axi_mst_w_chl_bits_wlast; // @[axi_ram_ctl.scala 43:23]
   assign axi_w_ctl_io_axi_b_ready = io_axi_mst_b_chl_ready; // @[axi_ram_ctl.scala 44:23]
-  assign axi_w_ctl_io_free = io_free; // @[axi_ram_ctl.scala 55:21]
+  assign axi_w_ctl_io_free = io_free; // @[axi_ram_ctl.scala 54:21]
 endmodule

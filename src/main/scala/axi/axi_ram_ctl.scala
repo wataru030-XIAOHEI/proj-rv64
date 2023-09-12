@@ -45,7 +45,6 @@ class axi_ram_intf_ctl extends axi_ram_ctl {
   
 
 
-  io.adr := axi_r_ctl.io.adr      //TODO,only radr now ,no wadr
   io.adr := Mux(axi_r_ctl.io.ren ,axi_r_ctl.io.adr,
             Mux(axi_w_ctl.io.wen ,axi_w_ctl.io.adr,0.U(AW.W)))
   io.ren := axi_r_ctl.io.ren 
@@ -55,4 +54,11 @@ class axi_ram_intf_ctl extends axi_ram_ctl {
   axi_w_ctl.io.free := io.free
   axi_r_ctl.io.rvld := io.rvld
   axi_r_ctl.io.rdat := io.rdat
+
+
+  val debug_arack = io.axi_mst.ar_chl.valid && io.axi_mst.ar_chl.ready
+  val debug_rack  = io.axi_mst.r_chl.valid && io.axi_mst.r_chl.ready 
+  val debug_awack = io.axi_mst.aw_chl.valid && io.axi_mst.aw_chl.ready 
+  val debug_wack  = io.axi_mst.w_chl.valid && io.axi_mst.w_chl.ready
+  val debug_back  = io.axi_mst.b_chl.valid && io.axi_mst.b_chl.ready
 }
