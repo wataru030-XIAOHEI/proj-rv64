@@ -1,0 +1,28 @@
+# verilog 仿真规范
+
+## 写在前
+该文档主要用于当在进行verilog仿真时，所进行的工程管理规范。
+
+## 工程目录
+如果需要创建一个verilog仿真工程时，请在`veri-sim`目录下，通过拷贝`demo`文件夹，并且修改为自己的项目名称，在`veri-sim`下建立一个新的项目工程。
+该`veri-sim`使用iverilog来进行仿真，借助vscode的扩展工具digital-IDE来实现工程的自动化仿真。
+
+## 工程目录结构
+这里以demo为例。user为用户文件存放的文件夹，data为存放仿真时所需要的激励或者其他文件等;sim存放仿真的tb的相关文件;src存放rtl设计文件。**需要注意的是，src里面的rtl文件，请使用软链接，到具体的rtl中，不要单独将rtl文件复制进来！！！**，软链接命令为：`ln -s <source_file> <dest_file>`。
+~~~
+├── prj
+│   └── simulation
+│       └── icarus
+│           └── out.vvp
+└── user
+    ├── data
+    ├── sim
+    │   ├── demo_tb.v
+    │   └── wave.vcd
+    └── src
+        └── demo_design.v -> ../../generated/axi_gen_test.v
+        
+~~~
+
+
+

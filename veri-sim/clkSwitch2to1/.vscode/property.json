@@ -1,0 +1,19 @@
+{
+	"toolChain": "xilinx",
+	"prjName": {
+		"PL": "template"
+	},
+	"soc": {
+		"core": "none"
+	},
+	"enableShowLog": true,
+	"device": "none",
+
+
+	"iverilogCompileOptions": {
+		"standard": "2012",
+		"includes": [
+			"${workspace}/user/src"
+		]
+	}
+}

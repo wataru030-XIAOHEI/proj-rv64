@@ -18,6 +18,7 @@ clkSwitch2to1 dut(
   .io_clko      (clko)
 );
 
+
 always #7 clk0 = ~clk0 ;
 always #2.3 clk1 = ~clk1 ;
 
