@@ -4,13 +4,24 @@ module testbench();
 
 reg                   clock = 0;
 reg                   reset = 0;
+wire                  simend ;
+reg [15:0]            cnt = 0 ;
+
+assign simend = cnt == {16{1'b1}};
+always @(posedge clock) begin 
+    if(reset) begin 
+        cnt <= 0;
+    end else begin 
+        cnt <= cnt + 1'b1;
+    end
+end
 
 always begin
     #(10) clock = ~clock;
 end
 
 always begin
-    #500 reset = 1;
+    #500 reset = 0;
 end
 
 //Instance 
@@ -33,18 +44,6 @@ sram_model dut(
     .io_q     	( io_q      )
 );
 
-golden_mdl mdl(
-	.clk 	( clock ),
-	.rst 	( reset )
-);
-reg [31:0] mem[255:0];
-integer i;
-initial begin
-    for(i = 0 ;i < 256 ;i = i+ 1) begin 
-        `MDL_MEM[i] = `DUT_MEM[i];
-    end
-    foreach(mem[i])  `DUT_MEM[i] = i;
-end
 
 always @(posedge clock) begin 
     if(reset)begin 
@@ -62,10 +61,21 @@ always @(posedge clock) begin
     end
 end
 
+ref_mdl ref_mdl(
+    .clock 	( clock  )
+);
+
+
+
 initial begin            
     $dumpfile("wave.vcd");        
     $dumpvars(0, testbench);    
-    #50000 $finish;
+end
+
+
+always @(posedge simend) begin 
+    $display("Finish This Sim !!!");
+    $finish;
 end
 
 endmodule  //TOP

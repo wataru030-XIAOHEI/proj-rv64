@@ -1,1 +1,1 @@
-../../generated/axi_gen_test.v
+./../../../../generated/hello.v
