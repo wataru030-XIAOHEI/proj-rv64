@@ -1,0 +1,3 @@
+../sim/tb_define.v
+../sim/init_chk.v
+../sim/testbench.v
