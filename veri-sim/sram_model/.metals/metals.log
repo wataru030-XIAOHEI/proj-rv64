@@ -1,0 +1,58 @@
+2023.09.18 23:44:30 INFO  Started: Metals version 1.0.1 in folders '/home/wataru/Desktop/proj-rv64/veri-sim/sram_model' for client Visual Studio Code 1.82.2.[0m
+Sep 18, 2023 11:44:30 PM org.flywaydb.core.internal.license.VersionPrinter printVersionOnly
+INFO: Flyway Community Edition 9.21.2 by Redgate
+Sep 18, 2023 11:44:30 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: See release notes here: https://rd.gt/416ObMi
+Sep 18, 2023 11:44:30 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: 
+Sep 18, 2023 11:44:32 PM org.flywaydb.core.FlywayExecutor execute
+INFO: Database: jdbc:h2:file:/home/wataru/Desktop/proj-rv64/veri-sim/sram_model/.metals/metals (H2 2.1)
+Sep 18, 2023 11:44:32 PM org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory allAppliedMigrations
+INFO: Schema history table "PUBLIC"."flyway_schema_history" does not exist yet
+Sep 18, 2023 11:44:32 PM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 4 migrations (execution time 00:00.067s)
+Sep 18, 2023 11:44:32 PM org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory create
+INFO: Creating Schema History table "PUBLIC"."flyway_schema_history" ...
+Sep 18, 2023 11:44:32 PM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema "PUBLIC": << Empty Schema >>
+Sep 18, 2023 11:44:32 PM org.flywaydb.core.internal.command.DbMigrate doMigrateGroup
+INFO: Migrating schema "PUBLIC" to version "1 - Create tables"
+Sep 18, 2023 11:44:32 PM org.flywaydb.core.internal.command.DbMigrate doMigrateGroup
+INFO: Migrating schema "PUBLIC" to version "2 - Server discovery"
+Sep 18, 2023 11:44:32 PM org.flywaydb.core.internal.command.DbMigrate doMigrateGroup
+INFO: Migrating schema "PUBLIC" to version "3 - Jar symbols"
+Sep 18, 2023 11:44:32 PM org.flywaydb.core.internal.command.DbMigrate doMigrateGroup
+INFO: Migrating schema "PUBLIC" to version "4 - Fingerprints"
+Sep 18, 2023 11:44:32 PM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Successfully applied 4 migrations to schema "PUBLIC", now at version v4 (execution time 00:00.053s)
+2023.09.18 23:44:32 INFO  time: initialize in 2.17s[0m
+Sep 18, 2023 11:44:37 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+2023.09.18 23:44:37 WARN  Build server is not auto-connectable.[0m
+2023.09.18 23:44:37 WARN  no build tool detected in workspace '/home/wataru/Desktop/proj-rv64/veri-sim/sram_model'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+2023.09.18 23:46:33 INFO  Shutting down server[0m
+2023.09.18 23:46:33 INFO  shutting down Metals[0m
+2023.09.18 23:46:33 INFO  Exiting server[0m
+2023.09.18 23:47:19 INFO  Started: Metals version 1.0.1 in folders '/home/wataru/Desktop/proj-rv64/veri-sim/sram_model' for client Visual Studio Code 1.82.2.[0m
+Sep 18, 2023 11:47:19 PM org.flywaydb.core.internal.license.VersionPrinter printVersionOnly
+INFO: Flyway Community Edition 9.21.2 by Redgate
+Sep 18, 2023 11:47:19 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: See release notes here: https://rd.gt/416ObMi
+Sep 18, 2023 11:47:19 PM org.flywaydb.core.internal.license.VersionPrinter printVersion
+INFO: 
+Sep 18, 2023 11:47:20 PM org.flywaydb.core.FlywayExecutor execute
+INFO: Database: jdbc:h2:file:/home/wataru/Desktop/proj-rv64/veri-sim/sram_model/.metals/metals (H2 2.1)
+Sep 18, 2023 11:47:20 PM org.flywaydb.core.internal.command.DbValidate validate
+INFO: Successfully validated 4 migrations (execution time 00:00.046s)
+Sep 18, 2023 11:47:20 PM org.flywaydb.core.internal.command.DbMigrate migrateGroup
+INFO: Current version of schema "PUBLIC": 4
+Sep 18, 2023 11:47:20 PM org.flywaydb.core.internal.command.DbMigrate logSummary
+INFO: Schema "PUBLIC" is up to date. No migration necessary.
+2023.09.18 23:47:20 INFO  time: initialize in 1.07s[0m
+2023.09.18 23:47:24 WARN  Build server is not auto-connectable.[0m
+2023.09.18 23:47:24 WARN  no build tool detected in workspace '/home/wataru/Desktop/proj-rv64/veri-sim/sram_model'. The most common cause for this problem is that the editor was opened in the wrong working directory, for example if you use sbt then the workspace directory should contain build.sbt. [0m
+Sep 18, 2023 11:47:45 PM org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint notify
+INFO: Unsupported notification method: $/setTrace
+2023.09.18 23:53:03 INFO  Shutting down server[0m
+2023.09.18 23:53:03 INFO  shutting down Metals[0m
+2023.09.18 23:53:03 INFO  Exiting server[0m

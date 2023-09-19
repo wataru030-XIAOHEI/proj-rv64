@@ -1,0 +1,18 @@
+{
+	"toolChain": "xilinx",
+	"prjName": {
+		"PL": "sram_model"
+	},
+	"soc": {
+		"core": "none"
+	},
+	"enableShowLog": true,
+	"device": "none",
+	"iverilogCompileOptions": {
+		"standard": "2005-sv",
+		"includes": [
+			"${workspace}/user/src",
+			"${workspace}/user/sim"
+		]
+	}
+}
