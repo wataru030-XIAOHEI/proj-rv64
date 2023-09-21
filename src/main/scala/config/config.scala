@@ -30,7 +30,7 @@ object defaultSettings {
 
     //core's config
     "IFWD"        -> 1      , //fetch width
-    "ISSUEWD"     -> 1      , //issue width
+    "ISSUEWD"     -> 4      , //issue width
     "HasFPU"      -> false  ,
 
     "IQDP"        -> 1      , //instructions queue depth

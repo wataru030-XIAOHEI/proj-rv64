@@ -9,11 +9,12 @@ clean:
 	@rm -rf flist 
 
 
-genlist: 
+genlist: clean
 	@find ../sim -name "*.v" -or -name "*.sv" >> ./flist
+	@find ../src -name "*.v" -or -name "*.sv" >> ./flist
 
 sim: clean genlist
-	@$(SIM_TOOL) $(VER) -I ../sim -o ./wave  -f ../run/flist  ./../src/*.v
+	@$(SIM_TOOL) $(VER) -I ../sim -o ./wave  -f ../run/flist  
 	vvp -n ./wave -l err.log | tee sim.log
 
 

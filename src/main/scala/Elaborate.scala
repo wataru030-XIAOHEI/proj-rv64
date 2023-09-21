@@ -1,3 +1,4 @@
+import code_tst.code_bus_prn_tst
 //================================================================
 // file         : elaborate
 // description  : elaborate scala file to verilog file
@@ -14,7 +15,6 @@ import chisel3.util._
 import libs._
 import axi._
 
-
 //==========================================================
 //============ E L A B O R A T E ===========================
 //==========================================================
@@ -22,7 +22,7 @@ object Elaborate extends App {
   def targetDir : String = "generated"
 
   def top = {
-    new clkSwitch2to1
+    new freelist
   } // change the top module class
   /**@note you can modify this defination to change the generation tool .*/
   def useCIRCT = true
@@ -42,16 +42,4 @@ object Elaborate extends App {
        |[INFO]: generate the module .
        |[INFO]: please checkout the target-dir=> [${targetDir}]
        |""".stripMargin)
-}
-
-
-class tempMux (NR:Int = 0 ,WD:Int = 0)extends RawModule {
-  val in  = IO(Input(Vec(NR,UInt(WD.W))))
-  val sel = IO(Input(UInt(NR.W)))
-  val out = IO(Output(UInt(WD.W)))
-
-  assert(NR>=1)
-  assert(WD> 0)
-  out := MuxCase(0.U(1.W),for(i <- 0 until NR) yield (sel(i) -> in(i) ))
-
 }

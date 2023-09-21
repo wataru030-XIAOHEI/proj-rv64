@@ -1,1 +1,2 @@
 ../sim/testbench.v
+../src/freelist.v

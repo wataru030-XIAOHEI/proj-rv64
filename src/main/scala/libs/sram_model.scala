@@ -52,13 +52,9 @@ class asnyc_sram_model(
     val wr_rd_pre = mem.read(io.adr)
     val wr_pre = Wire(UInt(32.W))
 
-    wr_pre := Cat(
-        Mux(we & io.wstrb(3),io.d(31,24),wr_rd_pre(31,24)),
-        Mux(we & io.wstrb(2),io.d(23,16),wr_rd_pre(23,16)),
-        Mux(we & io.wstrb(1),io.d(15, 8),wr_rd_pre(15, 8)),
-        Mux(we & io.wstrb(0),io.d( 7, 0),wr_rd_pre( 7, 0))
-    )
-
+    wr_pre := Cat((for(i <- 0 until 4) yield 
+                    (Mux(we & io.wstrb(i),io.d((i+1)*8-1,i*8),wr_rd_pre((i+1)*8-1,i*8)))
+                ).reverse)
     when(we){ mem.write(io.adr,wr_pre) }
 
 
@@ -109,12 +105,10 @@ class snyc_sram_model(
     val wr_rd_pre = mem.read(io.adr)
     val wr_pre = Wire(UInt(32.W))
 
-    wr_pre := Cat(
-        Mux(we & io.wstrb(3),io.d(31,24),wr_rd_pre(31,24)),
-        Mux(we & io.wstrb(2),io.d(23,16),wr_rd_pre(23,16)),
-        Mux(we & io.wstrb(1),io.d(15, 8),wr_rd_pre(15, 8)),
-        Mux(we & io.wstrb(0),io.d( 7, 0),wr_rd_pre( 7, 0))
-    )
+    wr_pre := Cat((for(i <- 0 until 4) yield 
+                    (Mux(we & io.wstrb(i),io.d((i+1)*8-1,i*8),wr_rd_pre((i+1)*8-1,i*8)))
+                ).reverse)
+
 
     when(we){ mem.write(io.adr,wr_pre) }
 
