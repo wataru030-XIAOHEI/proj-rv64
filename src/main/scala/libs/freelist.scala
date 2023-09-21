@@ -85,10 +85,6 @@ class freelist extends freelist_base {
 
     //realign the read pidx to fix order
     for(i <- 0 until NR){
-        io.pidx(i) := MuxCase(0.U,
-                        for(n <- i until NR ) yield (r_onehot(n) -> rd_pidx(n)))
-        io.pvld(i) := MuxCase(false.B,
-                        for(n <- i until NR ) yield (r_onehot(n) -> true.B))
         when(io.req(i)){
             if(i == 0){
                 val sum = io.req(0).asUInt.suggestName("is1_sum")
@@ -103,12 +99,6 @@ class freelist extends freelist_base {
                 io.pvld(i) := MuxCase(0.U,
                         for(n <- 0 until NR ) yield ((r_onehot(n) & (n.U >= sum)) -> rd_pvld(n)))
             }
-            /**
-              * req_2 == 1 
-              * io.pidx_2 = (r_one_hot[0] & 0 >= 1) -> |
-              *             (r_one_hot[1] & 1 >= 1) - > true 
-              *             (r_one_hot[2] & 2 >= 1) 
-              */
         }.otherwise{
             io.pidx(i) := 0.U 
             io.pvld(i) := false.B

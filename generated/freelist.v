@@ -61,10 +61,10 @@ module freelist(
   wire  idx_r_MPORT_3_en; // @[freelist.scala 39:20]
   reg [6:0] idx_rptr; // @[freelist.scala 41:27]
   reg [6:0] idx_wptr; // @[freelist.scala 42:27]
-  wire  empty = idx_wptr[6:2] == idx_rptr[6:2]; // @[freelist.scala 119:41]
+  wire  empty = idx_wptr[6:2] == idx_rptr[6:2]; // @[freelist.scala 109:41]
   wire  re = (io_req_0 | io_req_1 | (io_req_2 | io_req_3)) & ~empty; // @[freelist.scala 47:37]
-  wire  _full_T_5 = idx_wptr[5:2] == idx_rptr[5:2]; // @[freelist.scala 121:44]
-  wire  full = idx_wptr[6] != idx_rptr[6] & _full_T_5; // @[freelist.scala 120:54]
+  wire  _full_T_5 = idx_wptr[5:2] == idx_rptr[5:2]; // @[freelist.scala 111:44]
+  wire  full = idx_wptr[6] != idx_rptr[6] & _full_T_5; // @[freelist.scala 110:54]
   wire  we = (io_rls_0 | io_rls_1 | (io_rls_2 | io_rls_3)) & ~full; // @[freelist.scala 48:37]
   wire [1:0] _r_pidx_sum_T = io_req_0 + io_req_1; // @[freelist.scala 52:61]
   wire [1:0] _GEN_46 = {{1'd0}, io_req_2}; // @[freelist.scala 52:61]
@@ -114,31 +114,31 @@ module freelist(
   wire [5:0] _io_pidx_0_T_6 = r_onehot[1] ? rd_pidx_1 : _io_pidx_0_T_5; // @[Mux.scala 101:16]
   wire [5:0] _io_pidx_0_T_7 = r_onehot[0] ? rd_pidx_0 : _io_pidx_0_T_6; // @[Mux.scala 101:16]
   wire  _io_pvld_0_T_7 = r_onehot[0] | (r_onehot[1] | (r_onehot[2] | r_onehot[3])); // @[Mux.scala 101:16]
-  wire  _io_pidx_1_T_8 = r_onehot[0] & 1'h0 >= io_req_0; // @[freelist.scala 102:67]
-  wire [5:0] _io_pidx_1_T_21 = _io_pidx_1_T_8 ? rd_pidx_0 : _io_pidx_0_T_6; // @[Mux.scala 101:16]
-  wire  _io_pvld_1_T_19 = r_onehot[2] ? rd_pvld_2 : r_onehot[3] & rd_pvld_3; // @[Mux.scala 101:16]
-  wire  _io_pvld_1_T_20 = r_onehot[1] ? rd_pvld_1 : _io_pvld_1_T_19; // @[Mux.scala 101:16]
-  wire  _io_pvld_1_T_21 = _io_pidx_1_T_8 ? rd_pvld_0 : _io_pvld_1_T_20; // @[Mux.scala 101:16]
-  wire  _io_pidx_2_T_6 = r_onehot[0] & 2'h0 >= _r_pidx_sum_T; // @[freelist.scala 102:67]
-  wire  _io_pidx_2_T_9 = r_onehot[1] & 2'h1 >= _r_pidx_sum_T; // @[freelist.scala 102:67]
-  wire  _io_pidx_2_T_12 = r_onehot[2] & 2'h2 >= _r_pidx_sum_T; // @[freelist.scala 102:67]
-  wire [5:0] _io_pidx_2_T_17 = _io_pidx_2_T_12 ? rd_pidx_2 : _io_pidx_0_T_4; // @[Mux.scala 101:16]
-  wire [5:0] _io_pidx_2_T_18 = _io_pidx_2_T_9 ? rd_pidx_1 : _io_pidx_2_T_17; // @[Mux.scala 101:16]
-  wire [5:0] _io_pidx_2_T_19 = _io_pidx_2_T_6 ? rd_pidx_0 : _io_pidx_2_T_18; // @[Mux.scala 101:16]
-  wire  _io_pvld_2_T_17 = _io_pidx_2_T_12 ? rd_pvld_2 : r_onehot[3] & rd_pvld_3; // @[Mux.scala 101:16]
-  wire  _io_pvld_2_T_18 = _io_pidx_2_T_9 ? rd_pvld_1 : _io_pvld_2_T_17; // @[Mux.scala 101:16]
-  wire  _io_pvld_2_T_19 = _io_pidx_2_T_6 ? rd_pvld_0 : _io_pvld_2_T_18; // @[Mux.scala 101:16]
-  wire  _io_pidx_3_T_4 = r_onehot[0] & 3'h0 >= _r_pidx_sum_T_1; // @[freelist.scala 102:67]
-  wire  _io_pidx_3_T_7 = r_onehot[1] & 3'h1 >= _r_pidx_sum_T_1; // @[freelist.scala 102:67]
-  wire  _io_pidx_3_T_10 = r_onehot[2] & 3'h2 >= _r_pidx_sum_T_1; // @[freelist.scala 102:67]
-  wire  _io_pidx_3_T_13 = r_onehot[3] & 3'h3 >= _r_pidx_sum_T_1; // @[freelist.scala 102:67]
-  wire [5:0] _io_pidx_3_T_14 = _io_pidx_3_T_13 ? rd_pidx_3 : 6'h0; // @[Mux.scala 101:16]
-  wire [5:0] _io_pidx_3_T_15 = _io_pidx_3_T_10 ? rd_pidx_2 : _io_pidx_3_T_14; // @[Mux.scala 101:16]
-  wire [5:0] _io_pidx_3_T_16 = _io_pidx_3_T_7 ? rd_pidx_1 : _io_pidx_3_T_15; // @[Mux.scala 101:16]
-  wire [5:0] _io_pidx_3_T_17 = _io_pidx_3_T_4 ? rd_pidx_0 : _io_pidx_3_T_16; // @[Mux.scala 101:16]
-  wire  _io_pvld_3_T_15 = _io_pidx_3_T_10 ? rd_pvld_2 : _io_pidx_3_T_13 & rd_pvld_3; // @[Mux.scala 101:16]
-  wire  _io_pvld_3_T_16 = _io_pidx_3_T_7 ? rd_pvld_1 : _io_pvld_3_T_15; // @[Mux.scala 101:16]
-  wire  _io_pvld_3_T_17 = _io_pidx_3_T_4 ? rd_pvld_0 : _io_pvld_3_T_16; // @[Mux.scala 101:16]
+  wire  _io_pidx_1_T_2 = r_onehot[0] & 1'h0 >= io_req_0; // @[freelist.scala 98:67]
+  wire [5:0] _io_pidx_1_T_15 = _io_pidx_1_T_2 ? rd_pidx_0 : _io_pidx_0_T_6; // @[Mux.scala 101:16]
+  wire  _io_pvld_1_T_13 = r_onehot[2] ? rd_pvld_2 : r_onehot[3] & rd_pvld_3; // @[Mux.scala 101:16]
+  wire  _io_pvld_1_T_14 = r_onehot[1] ? rd_pvld_1 : _io_pvld_1_T_13; // @[Mux.scala 101:16]
+  wire  _io_pvld_1_T_15 = _io_pidx_1_T_2 ? rd_pvld_0 : _io_pvld_1_T_14; // @[Mux.scala 101:16]
+  wire  _io_pidx_2_T_2 = r_onehot[0] & 2'h0 >= _r_pidx_sum_T; // @[freelist.scala 98:67]
+  wire  _io_pidx_2_T_5 = r_onehot[1] & 2'h1 >= _r_pidx_sum_T; // @[freelist.scala 98:67]
+  wire  _io_pidx_2_T_8 = r_onehot[2] & 2'h2 >= _r_pidx_sum_T; // @[freelist.scala 98:67]
+  wire [5:0] _io_pidx_2_T_13 = _io_pidx_2_T_8 ? rd_pidx_2 : _io_pidx_0_T_4; // @[Mux.scala 101:16]
+  wire [5:0] _io_pidx_2_T_14 = _io_pidx_2_T_5 ? rd_pidx_1 : _io_pidx_2_T_13; // @[Mux.scala 101:16]
+  wire [5:0] _io_pidx_2_T_15 = _io_pidx_2_T_2 ? rd_pidx_0 : _io_pidx_2_T_14; // @[Mux.scala 101:16]
+  wire  _io_pvld_2_T_13 = _io_pidx_2_T_8 ? rd_pvld_2 : r_onehot[3] & rd_pvld_3; // @[Mux.scala 101:16]
+  wire  _io_pvld_2_T_14 = _io_pidx_2_T_5 ? rd_pvld_1 : _io_pvld_2_T_13; // @[Mux.scala 101:16]
+  wire  _io_pvld_2_T_15 = _io_pidx_2_T_2 ? rd_pvld_0 : _io_pvld_2_T_14; // @[Mux.scala 101:16]
+  wire  _io_pidx_3_T_2 = r_onehot[0] & 3'h0 >= _r_pidx_sum_T_1; // @[freelist.scala 98:67]
+  wire  _io_pidx_3_T_5 = r_onehot[1] & 3'h1 >= _r_pidx_sum_T_1; // @[freelist.scala 98:67]
+  wire  _io_pidx_3_T_8 = r_onehot[2] & 3'h2 >= _r_pidx_sum_T_1; // @[freelist.scala 98:67]
+  wire  _io_pidx_3_T_11 = r_onehot[3] & 3'h3 >= _r_pidx_sum_T_1; // @[freelist.scala 98:67]
+  wire [5:0] _io_pidx_3_T_12 = _io_pidx_3_T_11 ? rd_pidx_3 : 6'h0; // @[Mux.scala 101:16]
+  wire [5:0] _io_pidx_3_T_13 = _io_pidx_3_T_8 ? rd_pidx_2 : _io_pidx_3_T_12; // @[Mux.scala 101:16]
+  wire [5:0] _io_pidx_3_T_14 = _io_pidx_3_T_5 ? rd_pidx_1 : _io_pidx_3_T_13; // @[Mux.scala 101:16]
+  wire [5:0] _io_pidx_3_T_15 = _io_pidx_3_T_2 ? rd_pidx_0 : _io_pidx_3_T_14; // @[Mux.scala 101:16]
+  wire  _io_pvld_3_T_13 = _io_pidx_3_T_8 ? rd_pvld_2 : _io_pidx_3_T_11 & rd_pvld_3; // @[Mux.scala 101:16]
+  wire  _io_pvld_3_T_14 = _io_pidx_3_T_5 ? rd_pvld_1 : _io_pvld_3_T_13; // @[Mux.scala 101:16]
+  wire  _io_pvld_3_T_15 = _io_pidx_3_T_2 ? rd_pvld_0 : _io_pvld_3_T_14; // @[Mux.scala 101:16]
   assign idx_r_rd_pidx_0_MPORT_en = r_onehot[0] & re;
   assign idx_r_rd_pidx_0_MPORT_addr = _rd_pidx_0_T[5:0];
   assign idx_r_rd_pidx_0_MPORT_data = idx_r[idx_r_rd_pidx_0_MPORT_addr]; // @[freelist.scala 39:20]
@@ -167,18 +167,15 @@ module freelist(
   assign idx_r_MPORT_3_addr = _T_24[5:0];
   assign idx_r_MPORT_3_mask = 1'h1;
   assign idx_r_MPORT_3_en = w_onehot[3] & we;
-  assign io_pidx_0 = io_req_0 ? _io_pidx_0_T_7 : 6'h0; // @[freelist.scala 113:24 92:24 95:28]
-  assign io_pidx_1 = io_req_1 ? _io_pidx_1_T_21 : 6'h0; // @[freelist.scala 92:24 101:28 113:24]
-  assign io_pidx_2 = io_req_2 ? _io_pidx_2_T_19 : 6'h0; // @[freelist.scala 92:24 101:28 113:24]
-  assign io_pidx_3 = io_req_3 ? _io_pidx_3_T_17 : 6'h0; // @[freelist.scala 92:24 101:28 113:24]
-  assign io_pvld_0 = io_req_0 & _io_pvld_0_T_7; // @[freelist.scala 114:24 92:24 97:28]
-  assign io_pvld_1 = io_req_1 & _io_pvld_1_T_21; // @[freelist.scala 92:24 103:28 114:24]
-  assign io_pvld_2 = io_req_2 & _io_pvld_2_T_19; // @[freelist.scala 92:24 103:28 114:24]
-  assign io_pvld_3 = io_req_3 & _io_pvld_3_T_17; // @[freelist.scala 92:24 103:28 114:24]
-  assign io_busy = idx_wptr[6:2] == idx_rptr[6:2]; // @[freelist.scala 119:41]
-initial begin
-  $readmemh("../data/freelist.mem", idx_r);
-end
+  assign io_pidx_0 = io_req_0 ? _io_pidx_0_T_7 : 6'h0; // @[freelist.scala 103:24 88:24 91:28]
+  assign io_pidx_1 = io_req_1 ? _io_pidx_1_T_15 : 6'h0; // @[freelist.scala 103:24 88:24 97:28]
+  assign io_pidx_2 = io_req_2 ? _io_pidx_2_T_15 : 6'h0; // @[freelist.scala 103:24 88:24 97:28]
+  assign io_pidx_3 = io_req_3 ? _io_pidx_3_T_15 : 6'h0; // @[freelist.scala 103:24 88:24 97:28]
+  assign io_pvld_0 = io_req_0 & _io_pvld_0_T_7; // @[freelist.scala 104:24 88:24 93:28]
+  assign io_pvld_1 = io_req_1 & _io_pvld_1_T_15; // @[freelist.scala 104:24 88:24 99:28]
+  assign io_pvld_2 = io_req_2 & _io_pvld_2_T_15; // @[freelist.scala 104:24 88:24 99:28]
+  assign io_pvld_3 = io_req_3 & _io_pvld_3_T_15; // @[freelist.scala 104:24 88:24 99:28]
+  assign io_busy = idx_wptr[6:2] == idx_rptr[6:2]; // @[freelist.scala 109:41]
   always @(posedge clock) begin
     if (idx_r_MPORT_en & idx_r_MPORT_mask) begin
       idx_r[idx_r_MPORT_addr] <= idx_r_MPORT_data; // @[freelist.scala 39:20]
@@ -203,6 +200,9 @@ end
       idx_wptr <= _idx_wptr_T_1; // @[freelist.scala 73:24]
     end
   end
+initial begin
+  $readmemh("../data/freelist.mem", idx_r);
+end
 // Register and memory initialization
 `ifdef RANDOMIZE_GARBAGE_ASSIGN
 `define RANDOMIZE
