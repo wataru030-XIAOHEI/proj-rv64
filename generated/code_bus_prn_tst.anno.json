@@ -1,0 +1,34 @@
+[
+  {
+    "class":"firrtl.EmitCircuitAnnotation",
+    "emitter":"firrtl.VerilogEmitter"
+  },
+  {
+    "class":"firrtl.transforms.BlackBoxTargetDirAnno",
+    "targetDir":"generated"
+  },
+  {
+    "class":"firrtl.transforms.CombinationalPath",
+    "sink":"~code_bus_prn_tst|code_bus_prn_tst>io_rdat",
+    "sources":[
+      "~code_bus_prn_tst|code_bus_prn_tst>io_rreq",
+      "~code_bus_prn_tst|code_bus_prn_tst>io_radr"
+    ]
+  },
+  {
+    "class":"firrtl.transforms.CombinationalPath",
+    "sink":"~code_bus_prn_tst|code_bus_prn_tst>io_rok",
+    "sources":[
+      "~code_bus_prn_tst|code_bus_prn_tst>io_rreq",
+      "~code_bus_prn_tst|code_bus_prn_tst>io_radr"
+    ]
+  },
+  {
+    "class":"firrtl.transforms.CombinationalPath",
+    "sink":"~code_bus_prn_tst|code_bus_prn_tst>io_wok",
+    "sources":[
+      "~code_bus_prn_tst|code_bus_prn_tst>io_wreq",
+      "~code_bus_prn_tst|code_bus_prn_tst>io_wadr"
+    ]
+  }
+]

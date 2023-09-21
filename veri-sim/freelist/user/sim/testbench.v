@@ -60,10 +60,12 @@ initial begin
 	io_rls_pidx_0 = 0 ; io_rls_pidx_1 = 0 ; io_rls_pidx_2 = 0 ; io_rls_pidx_3 = 0 ;
 	@(negedge reset);
 	io_req_0 = 1 ;
+	io_req_2 = 1 ;
+	io_req_3 = 1 ;
 end
 
 
-freelist u_freelist(
+freelist freelist(
 	.clock         	( clock          ),
 	.reset         	( reset          ),
 	.io_req_0      	( io_req_0       ),
@@ -88,7 +90,6 @@ freelist u_freelist(
 	.io_rls_pidx_2 	( io_rls_pidx_2  ),
 	.io_rls_pidx_3 	( io_rls_pidx_3  )
 );
-
 
 
 initial begin            

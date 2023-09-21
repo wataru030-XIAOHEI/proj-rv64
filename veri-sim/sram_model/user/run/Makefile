@@ -1,12 +1,20 @@
 
 SIM_TOOL = iverilog
 
-VER = -g2005-sv
+VER = -g2012
 
 
-sim:
-	$(SIM_TOOL) $(VER) -I ../sim -o ./wave ./../sim/*.v ./../src/*.v
-	./wave 
+clean:
+	@rm -rf ./*.log 
+	@rm -rf flist 
+
+
+genlist: 
+	@find ../sim -name "*.v" -or -name "*.sv" >> ./flist
+
+sim: clean genlist
+	@$(SIM_TOOL) $(VER) -I ../sim -o ./wave  -f ../run/flist  ./../src/*.v
+	vvp -n ./wave -l err.log | tee sim.log
 
 
 

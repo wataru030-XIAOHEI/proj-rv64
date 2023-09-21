@@ -39,7 +39,7 @@ class freelist extends freelist_base {
     val idx_r = Mem(DP,UInt(PREG_WD.W))
     loadMemoryFromFile(idx_r,"../data/freelist.mem")
     val idx_rptr = RegInit(0.U((PREG_WD+1).W))
-    val idx_wptr = RegInit((DP-1).U((PREG_WD+1).W))
+    val idx_wptr = RegInit(DP.U((PREG_WD+1).W))
 
     val empty = Wire(Bool())
     val full  = Wire(Bool())
@@ -49,8 +49,8 @@ class freelist extends freelist_base {
     
     val r_pidx_sum = Wire(UInt(log2Ceil(NR).W))
     val w_pidx_sum = Wire(UInt(log2Ceil(NR).W))
-    r_pidx_sum := (for(i <- io.req) yield i.asUInt).reduce(_+_)
-    w_pidx_sum := (for(i <- io.rls) yield i.asUInt).reduce(_+_)
+    r_pidx_sum := (for(i <- io.req) yield i.asUInt).reduce(_+&_)
+    w_pidx_sum := (for(i <- io.rls) yield i.asUInt).reduce(_+&_)
     
 
     val r_onehot = Wire(UInt(NR.W))
@@ -89,10 +89,35 @@ class freelist extends freelist_base {
                         for(n <- i until NR ) yield (r_onehot(n) -> rd_pidx(n)))
         io.pvld(i) := MuxCase(false.B,
                         for(n <- i until NR ) yield (r_onehot(n) -> true.B))
+        when(io.req(i)){
+            if(i == 0){
+                val sum = io.req(0).asUInt.suggestName("is1_sum")
+                io.pidx(i) := MuxCase(0.U,
+                        for(n <- i until NR ) yield (r_onehot(n) -> rd_pidx(n)))
+                io.pvld(i) := MuxCase(false.B,
+                        for(n <- i until NR ) yield (r_onehot(n) -> true.B))
+            }else{
+                val sum = (for(x <- 0 until i ) yield (io.req(x).asUInt)).reduce(_+&_).suggestName("else1_sum")
+                io.pidx(i) := MuxCase(0.U,
+                        for(n <- 0 until NR ) yield ((r_onehot(n) & (n.U >= sum)) -> rd_pidx(n)))
+                io.pvld(i) := MuxCase(0.U,
+                        for(n <- 0 until NR ) yield ((r_onehot(n) & (n.U >= sum)) -> rd_pvld(n)))
+            }
+            /**
+              * req_2 == 1 
+              * io.pidx_2 = (r_one_hot[0] & 0 >= 1) -> |
+              *             (r_one_hot[1] & 1 >= 1) - > true 
+              *             (r_one_hot[2] & 2 >= 1) 
+              */
+        }.otherwise{
+            io.pidx(i) := 0.U 
+            io.pvld(i) := false.B
+        }
     }    
 
-    empty := idx_wptr(PREG_WD,1) === idx_rptr(PREG_WD,1)
+    val tail_bit = log2Ceil(NR)
+    empty := idx_wptr(PREG_WD,tail_bit) === idx_rptr(PREG_WD,tail_bit)
     full  := (idx_wptr.head(1) =/= idx_rptr.head(1)) && 
-              idx_wptr(PREG_WD-1,1) === idx_rptr(PREG_WD-1,1)
+              idx_wptr(PREG_WD-1,tail_bit) === idx_rptr(PREG_WD-1,tail_bit)
     io.busy := empty
 }

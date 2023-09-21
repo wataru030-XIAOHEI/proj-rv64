@@ -19,6 +19,7 @@ class axi_r_ctl_io[T<:Data] ( gen : T ) extends Bundle with axi_parm{
   val ren = Output(Bool())
   val rdat = Input(gen)
   val rvld = Input(Bool())
+  
 }
 
 abstract class axi_r_ctl_base[T<:Data](gen:T) extends Module with axi_parm{

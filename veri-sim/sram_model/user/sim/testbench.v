@@ -3,7 +3,7 @@
 module testbench();
 
 reg                   clock = 0;
-reg                   reset = 0;
+reg                   reset = 1;
 wire                  simend ;
 reg [15:0]            cnt = 0 ;
 
@@ -20,7 +20,8 @@ always begin
     #(10) clock = ~clock;
 end
 
-always begin
+initial begin
+    reset = 1 ;
     #500 reset = 0;
 end
 
@@ -62,7 +63,8 @@ always @(posedge clock) begin
 end
 
 ref_mdl ref_mdl(
-    .clock 	( clock  )
+    .clock 	( clock  ),
+    .reset  ( reset  )
 );
 
 

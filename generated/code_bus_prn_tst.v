@@ -91,13 +91,10 @@ module code_bus_prn_tst(
   wire  con_we_13 = io_wadr == 4'hd & io_wreq; // @[code_bus_prn_tst.scala 26:40]
   wire  con_we_14 = io_wadr == 4'he & io_wreq; // @[code_bus_prn_tst.scala 26:40]
   wire  con_we_15 = io_wadr == 4'hf & io_wreq; // @[code_bus_prn_tst.scala 26:40]
-  wire  _rv_T = io_rok & io_rreq; // @[core_bus.scala 56:25]
-  wire [6:0] rv = io_rok & io_rreq ? 7'h52 : 7'h2d; // @[core_bus.scala 56:21]
-  wire [3:0] ra = _rv_T ? io_radr : 4'h0; // @[core_bus.scala 57:21]
-  wire [31:0] rd = _rv_T ? io_rdat : 32'h0; // @[core_bus.scala 58:21]
-  wire  _wv_T = io_wok & io_wreq; // @[core_bus.scala 59:25]
-  wire [3:0] wa = _wv_T ? io_wadr : 4'h0; // @[core_bus.scala 60:21]
-  wire [31:0] wd = _wv_T ? io_wdat : 32'h0; // @[core_bus.scala 61:21]
+  wire  _wv_T = io_wok & io_wreq; // @[core_bus.scala 53:25]
+  wire [6:0] wv = io_wok & io_wreq ? 7'h57 : 7'h2d; // @[core_bus.scala 53:21]
+  wire [3:0] wa = _wv_T ? io_wadr : 4'h0; // @[core_bus.scala 54:21]
+  wire [31:0] wd = _wv_T ? io_wdat : 32'h0; // @[core_bus.scala 55:21]
   assign io_wok = con_we_0 | con_we_1 | (con_we_2 | con_we_3) | (con_we_4 | con_we_5 | (con_we_6 | con_we_7)) | (
     con_we_8 | con_we_9 | (con_we_10 | con_we_11) | (con_we_12 | con_we_13 | (con_we_14 | con_we_15))); // @[code_bus_prn_tst.scala 22:34]
   assign io_rdat = con_re_0 ? con_reg_0 : _io_rdat_T_14; // @[Mux.scala 101:16]
@@ -189,9 +186,7 @@ module code_bus_prn_tst(
       if (`PRINTF_COND) begin
     `endif
         if (~reset) begin
-          $fwrite(32'h80000002,
-            "cb_prn_tst.core_bus : \n%c : 0x%x => 0x%d \ncb_prn_tst.core_bus : \n%c : 0x%x => 0x%d \n",rv,ra,rd,rv,wa,wd
-            ); // @[code_bus_prn_tst.scala 31:11]
+          $fwrite(32'h80000002,"%c : 0x%x => 0x%d \n",wv,wa,wd); // @[code_bus_prn_tst.scala 31:11]
         end
     `ifdef PRINTF_COND
       end

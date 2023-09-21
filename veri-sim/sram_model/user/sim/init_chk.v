@@ -1,4 +1,5 @@
-module ref_mdl(input clock);
+`timescale 1ns/1ps
+module ref_mdl(input clock,input reset);
 reg [31:0] chk_mem [255:0];
 
 
@@ -59,6 +60,7 @@ always @(posedge clock) begin
         $display("========= RMEM CHECK ==============");
         $display("     ERROR DUT MEM[%0d] : 0x%0h   ",rd_adr_r[0],testbench.dut.io_q);
         $display("     ERROR REF MEM[%0d] : 0x%0h   ",rd_adr_r[0],chk_mem[rd_adr_r[0]]);
+        $display("      @ T = %t",$time);
         $display("==================================");
         repeat(50) @(posedge clock);
         $finish();
@@ -74,6 +76,7 @@ task t_check_mem(input [7:0] adr);
         $display("========= MEM CHECK ==============");
         $display("     ERROR DUT MEM[%0d] : 0x%0h   ",adr,`DUT_MEM[adr]);
         $display("     ERROR REF MEM[%0d] : 0x%0h   ",adr,chk_mem[adr]);
+        $display("      @ T = %t",$time);
         $display("==================================");
         repeat(50) @(posedge clock);
         $finish();
