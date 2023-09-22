@@ -37,7 +37,8 @@ abstract class freelist_base extends CModule with freelist_param{
 
 class freelist extends freelist_base {
     val idx_r = Mem(DP,UInt(PREG_WD.W))
-    loadMemoryFromFile(idx_r,"../data/freelist.mem")
+    loadMemoryFromFile(idx_r,"../data/freelist.mem") //todo : use lookup table ,Dont use regs array
+                                                     //       Chisel will generate a very LONG trans chain!!!
     val idx_rptr = RegInit(0.U((PREG_WD+1).W))
     val idx_wptr = RegInit(DP.U((PREG_WD+1).W))
 
@@ -49,8 +50,8 @@ class freelist extends freelist_base {
     
     val r_pidx_sum = Wire(UInt(log2Ceil(NR).W))
     val w_pidx_sum = Wire(UInt(log2Ceil(NR).W))
-    r_pidx_sum := (for(i <- io.req) yield i.asUInt).reduce(_+&_)
-    w_pidx_sum := (for(i <- io.rls) yield i.asUInt).reduce(_+&_)
+    r_pidx_sum := VecInit(for(i <- io.req) yield i.asUInt).reduceTree(_+&_)
+    w_pidx_sum := VecInit(for(i <- io.rls) yield i.asUInt).reduceTree(_+&_)
     
 
     val r_onehot = Wire(UInt(NR.W))
@@ -84,6 +85,7 @@ class freelist extends freelist_base {
     }
 
     //realign the read pidx to fix order
+    // note : unuse suggestName 
     for(i <- 0 until NR){
         when(io.req(i)){
             if(i == 0){
@@ -93,7 +95,7 @@ class freelist extends freelist_base {
                 io.pvld(i) := MuxCase(false.B,
                         for(n <- i until NR ) yield (r_onehot(n) -> true.B))
             }else{
-                val sum = (for(x <- 0 until i ) yield (io.req(x).asUInt)).reduce(_+&_).suggestName("else1_sum")
+                val sum = VecInit(for(x <- 0 until i ) yield (io.req(x).asUInt)).reduceTree(_+&_).suggestName("else1_sum")
                 io.pidx(i) := MuxCase(0.U,
                         for(n <- 0 until NR ) yield ((r_onehot(n) & (n.U >= sum)) -> rd_pidx(n)))
                 io.pvld(i) := MuxCase(0.U,
