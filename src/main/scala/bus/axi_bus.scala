@@ -1,101 +1,122 @@
-//================================================================
-// file         : axi_bus
-// description  : axi interface
-// author       : Wataru
-// version      :
-// date         : 2023-08-05
-//================================================================
 package bus
-import chisel3._
-import chisel3.util._
 
+import chisel3._ 
+import chisel3.util._ 
+import chisel3.experimental.IO
+import isa.isa_I
 
-class axi_ar(
-               AW:Int  = 32 ,
-               LW:Int  = 4  ,
-               IDW:Int = 4
-            ) extends Bundle {
-  val arid    = UInt(IDW.W)
-  val araddr  = UInt(AW.W)
-  val arsize  = UInt(3.W)
-  val arlen   = UInt(LW.W)
-  val arbusrt = UInt(2.W)
-  val arlock  = UInt(2.W)
-  val arcache = UInt(2.W)
-  val arprot  = UInt(2.W)
-
+object axi_chl{
+    val size_wd  :Int = 3 
+    val burst_wd :Int = 2
+    val cache_wd :Int = 2
+    val lock_wd  :Int = 2
+    val prot_wd  :Int = 2
 }
 
-class axi_r[T<:Data](
-                    gen : T ,
-                    IDW:Int = 4
-                    ) extends Bundle {
-  val rid    = UInt(IDW.W)
-  val rdata  = gen
-  val rresp  = UInt(2.W)
-  val rlast  = Bool()
-
+case class axi_chl_param(
+    AW:Int,
+    DW:Int,
+    WW:Int,
+    LENW:Int,
+    IDW:Int
+){
+    require(AW>=16,s"AXI address width must be >= 16 (current aw = ${AW})")
+    require(DW%8==0,s"AXI data width must be align with Byte (current dw = ${DW})")
+    require(WW*8==DW,s"AXI wstrb width neq DW current ww = ${WW}")
 }
 
 
-class axi_aw(
-              AW:Int  = 32 ,
-              LW:Int  = 4  ,
-              IDW:Int = 4
-            ) extends Bundle {
-  val awid    = UInt(IDW.W)
-  val awaddr  = UInt(AW.W)
-  val awsize  = UInt(3.W)
-  val awlen   = UInt(LW.W)
-  val awbusrt = UInt(2.W)
-  val awlock  = UInt(2.W)
-  val awcache = UInt(2.W)
-  val awprot  = UInt(2.W)
+class address_chl(p:axi_chl_param) extends Bundle {
+    val id = UInt(p.IDW.W)
+    val addr = UInt(p.AW.W)
+    val size = UInt(if(p.DW==64)3.W else 2.W)
+    val len  = UInt(p.LENW.W)
+    val burst= UInt(axi_chl.burst_wd.W)
+    val lock = UInt(axi_chl.lock_wd.W)
+    val cache= UInt(axi_chl.cache_wd.W)
+    val prot = UInt(axi_chl.prot_wd.W)
 }
 
-class axi_w[T<:Data](
-                      gen : T ,
-                      IDW:Int = 4
-                    ) extends Bundle {
-  val wid    = UInt(IDW.W)
-  val wstrb  = UInt(4.W)
-  val wdata  = gen
-  val wlast  = Bool()
-
+object address_chl {
+    def apply(p:axi_chl_param)(
+    id:UInt,
+    adr:UInt,
+    size:UInt,
+    len:UInt,
+    burst:UInt,
+    lock:UInt = 0.U,
+    cache:UInt= 0.U,
+    prot:UInt = 0.U
+    ) : address_chl = {
+        val ar = Wire(new address_chl(p))
+        ar.addr := adr
+        ar.id := id 
+        ar.size := size
+        ar.len := len 
+        ar.burst := burst
+        ar.lock := lock
+        ar.cache := cache 
+        ar.prot := prot
+        ar
+    }
 }
 
-class axi_b (
-            IDW: Int = 4
-            ) extends Bundle {
-  val bid   = UInt(IDW.W)
-  val bresp = UInt(2.W)
+class data_channel(p:axi_chl_param) extends Bundle{
+    val id   = UInt(p.IDW.W)
+    val strb = UInt(p.WW.W)
+    val data = UInt(p.DW.W)
+    val last = Bool()
+    val resp = UInt(2.W)
+}
+
+object data_channel{
+    def apply(p:axi_chl_param)(
+        id:UInt,
+        strb:UInt,
+        data:UInt,
+        last:Bool,
+        resp:UInt = 0.U
+    ) :data_channel = {
+        val d = Wire(new data_channel(p))
+        d.data := data
+        d.id := id 
+        d.strb := strb 
+        d.last := last 
+        d.resp := resp
+        d
+    }
+}
+
+class b_channel(p:axi_chl_param) extends Bundle{
+    val id = UInt(p.IDW.W)
+    val resp = UInt(2.W)
+}
+object b_channel {
+    def apply(p:axi_chl_param)(
+        id:UInt,
+        resp:UInt = 0.U 
+    ) : b_channel = {
+        val b = Wire(new b_channel(p))
+        b.id := id 
+        b.resp := resp
+        b
+    }
 }
 
 
-class axi_bundle[T<:Data](
-                      gen : T ,
-                      AW:Int = 32 ,
-                      LW:Int = 4  ,
-                      IDW:Int= 4
-                      )extends Bundle{
-  val ar_chl = DecoupledIO(new axi_ar(AW,LW,IDW))
-  val r_chl  = DecoupledIO(new axi_r(gen,IDW))
-  val aw_chl = DecoupledIO(new axi_aw(AW,LW,IDW))
-  val w_chl  = DecoupledIO(new axi_w(gen,IDW))
-  val b_chl  = DecoupledIO(new axi_b(IDW))
-
+class axi_channel_io(implicit p : axi_chl_param) extends Bundle {
+    val ar = Decoupled(new address_chl(p)) 
+    val aw = Decoupled(new address_chl(p))
+    val w  = Decoupled(new data_channel(p))
+    val r  = Flipped(Decoupled(new data_channel(p)))
+    val b  = Flipped(Decoupled(new b_channel(p)))
 }
 
-class axi_io[T<:Data](
-                     gen : T ,
-                     AW  : Int = 32 ,
-                     LW  : Int = 4  ,
-                     IDW : Int = 4  ,
-                     ) extends Bundle {
-  val ar_chl  = Decoupled(Output(new axi_ar(AW,LW,IDW)))
-  val r_chl   = Flipped(Decoupled(Output(new axi_r(gen,IDW))))
-  val aw_chl  = Decoupled(Output(new axi_aw(AW,LW,IDW)))
-  val w_chl   = Decoupled(Output(new axi_w(gen,IDW)))
-  val b_chl   = Flipped(Decoupled(Output(new axi_b(IDW))))
-}
 
+class axi_channle(implicit p : axi_chl_param) extends Bundle {
+    val ar = new address_chl(p)
+    val aw = new address_chl(p)
+    val w  = new data_channel(p)
+    val r  = new data_channel(p)
+    val b  = new data_channel(p)
+}

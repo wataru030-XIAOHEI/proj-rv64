@@ -10,6 +10,7 @@ package libs
 
 import chisel3.util._
 import chisel3._
+import javax.swing.plaf.synth.Region
 class clk extends Module {
   val clko = IO(Output(Clock()))
 
@@ -93,17 +94,19 @@ class clkSwitch2to1 (DLY:Int = 2) extends Module {
 
 
 //gate clk
-class gtclk extends Module {
+class gtclk extends RawModule {
   val io = IO(new Bundle {
+    val clkin = Input(Clock())
+    val reset = Input(AsyncReset())
     val ena = Input(Bool())
     val clko = Output(Clock())
   })
 
-  val ena_r = RegInit(false.B)
-
-  ena_r := io.ena
-
-  io.clko := (ena_r & clock.asBool).asClock
+  withClockAndReset(io.clkin,io.reset){
+    val ena_r = RegInit(false.B)
+    ena_r := io.ena
+    io.clko := (ena_r & io.clkin.asBool).asClock
+  }
 
 }
 
