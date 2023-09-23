@@ -6,7 +6,6 @@
 // date         : 2023-08-06
 //================================================================
 package axi
-import bus._
 import chisel3._
 import chisel3.util.{Fill, MuxCase}
 import bus.axi_chl_param
