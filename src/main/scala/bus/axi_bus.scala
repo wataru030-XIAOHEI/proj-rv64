@@ -6,6 +6,8 @@ import chisel3.experimental.IO
 import isa.isa_I
 
 object axi_chl{
+    val id_wd    :Int = 2
+    val len_wd   :Int = 4
     val size_wd  :Int = 3 
     val burst_wd :Int = 2
     val cache_wd :Int = 2

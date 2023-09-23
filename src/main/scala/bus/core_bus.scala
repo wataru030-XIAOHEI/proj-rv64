@@ -61,11 +61,12 @@ class core_bus_io(p:core_bus_param) extends Bundle{
       val rdv = Mux(rd.valid,'*'.U,'-'.U)
       val wdv = Mux(wd.valid,'*'.U,'-'.U)
    
-      p"=========================\n" +
+      p"===============================================\n" +
       p"radr  ===> ${Character(rav)} : 0x${Hexadecimal(ra.bits.address)}\n" + 
       p"rdat  ===> ${Character(rdv)} : 0x${Hexadecimal(rd.bits.data)}\n" +
       p"wadr  ===> ${Character(wav)} : 0x${Hexadecimal(wa.bits.address)}\n" + 
       p"wdat  ===> ${Character(wdv)} : 0x${Hexadecimal(wd.bits.data)}\n" +
-      p"wstrb ===> ${Character(wdv)} : 0x${Binary(wd.bits.strb)}\n"
+      p"wstrb ===> ${Character(wdv)} : 0x${Binary(wd.bits.strb)}\n" +
+      p"===============================================\n" 
    }
 }
